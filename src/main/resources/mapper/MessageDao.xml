@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.you.yiban.dao.MessageDao">
+    <insert id="insertMessage">
+        insert ignore into message(username,message_type,
+        message,qq,phone,message_answer,message_state,
+        create_time,answer_image,answer_username)
+        values (#{username},#{messageType},#{message},#{qq},#{phone},null,0,
+        #{createTime},null,null)
+    </insert>
+
+    <select id="queryListMessageByUsername" resultType="com.you.yiban.entity.Message">
+        select
+        message.message_type,
+        message.message,
+        message.message_state,
+        message.create_time,
+        message.answer_username,
+        message.answer_image,
+        message.message_answer
+        from message inner join user on message.username = user.username
+        where message.username = #{username}
+    </select>
+
+    <select id="getAllMessage" resultType="com.you.yiban.entity.Message">
+        select
+        message.message_id,
+        message.message_type,
+        message.create_time,
+        message.message,
+        message.message_answer,
+        user.username,
+        user.user_image
+        from message inner join user on message.username = user.username
+    </select>
+
+    <select id="getMessageWithAnswer" resultType="com.you.yiban.entity.Message">
+        select
+        message.message_type,
+        message.create_time,
+        message.message,
+        user.username,
+        user.user_image
+        from message message inner join user on message.username = user.username
+        where  message_state = 1
+    </select>
+
+    <select id="getWaitDeal" resultType="com.you.yiban.entity.Message">
+      select
+        message.message_type,
+        message.create_time,
+        message.message,
+        user.username,
+        user.user_image
+        from message message inner join user on message.username = user.username
+        where  message_state = 0
+    </select>
+
+    <update id="dealMessage">
+        update message set
+            message_answer = #{messageAnswer},
+            answer_image = #{answerImage},
+            answer_username = #{answerUsername},
+            message_state = 1
+        where message_id = #{messageId}
+    </update>
+
+    <delete id="delete">
+        delete from message where message_id = #{messageId}
+    </delete>
+    
+    <select id="getByMessageId" parameterType="int" resultType="com.you.yiban.entity.Message" >
+        select * from message where message_id = #{messageId}
+    </select>
+</mapper>
+
