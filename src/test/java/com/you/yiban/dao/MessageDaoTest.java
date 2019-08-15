@@ -44,7 +44,7 @@ public class MessageDaoTest {
         message.setUsername("test3");
         message.setMessageAnswer("agree");
         message.setMessage("baoliao");
-        message.setCreateTime(new Date());
+       // message.setCreateTime();
         message.setMessageState(2);
         message.setQq("88888");
         message.setPhone("19800303");

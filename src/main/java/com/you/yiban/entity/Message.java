@@ -21,11 +21,23 @@ public class Message {
     // 报料回复状态
     private Integer messageState;
     // 报料创建时间
-    private Date createTime;
+    private String createTime;
     // 回复人头像
     private String answerImage;
     // 回复人用户名
     private String answerUsername;
+    // 创建报料用户的头像
+    private String userImage;
+    // 点赞数量
+    private int praiseCount;
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
 
     public String getUsername() {
         return username;
@@ -95,11 +107,11 @@ public class Message {
         this.messageState = messageState;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -115,6 +127,14 @@ public class Message {
         this.answerUsername = answerUsername;
     }
 
+    public int getPraiseCount() {
+        return praiseCount;
+    }
+
+    public void setPraiseCount(int praiseCount) {
+        this.praiseCount = praiseCount;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -126,9 +146,11 @@ public class Message {
                 ", phone='" + phone + '\'' +
                 ", messageAnswer='" + messageAnswer + '\'' +
                 ", messageState=" + messageState +
-                ", createTime=" + createTime +
+                ", createTime='" + createTime + '\'' +
                 ", answerImage='" + answerImage + '\'' +
                 ", answerUsername='" + answerUsername + '\'' +
+                ", userImage='" + userImage + '\'' +
+                ", praiseCount=" + praiseCount +
                 '}';
     }
 }

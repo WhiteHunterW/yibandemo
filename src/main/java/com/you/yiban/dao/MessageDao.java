@@ -43,6 +43,13 @@ public interface MessageDao {
     List<Message> getWaitDeal();
 
     /**
+     * 根据报料部门查询对应部门的报料信息
+     * @param messageType
+     * @return
+     */
+    List<Message> getMesgByType(String messageType);
+
+    /**
      * 官方处理报料,设置回复
      * @param 
      * @return
@@ -65,4 +72,14 @@ public interface MessageDao {
      * @return
      */
     Message getByMessageId(int messageId);
+
+    /**
+     * 增加点赞数量
+     * @param messageId
+     * @return
+     */
+    int updatePraiseCount(String messageId);
+    
 }
+
+  

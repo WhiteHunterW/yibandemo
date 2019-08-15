@@ -3,12 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.you.yiban.dao.MessageDao">
+    <resultMap id="BaseResultMap" type="com.you.yiban.entity.Message">
+        <id column="message_id" property="messageId" jdbcType="INTEGER" javaType="int"/>
+        <result column="username" property="username" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="message_type" property="messageType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="message" property="message" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="qq" property="qq" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="message_answer" property="messageAnswer" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="message_state" property="messageState" javaType="int" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="answer_image" property="answerImage" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="answer_username" property="answerUsername" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <association property="user" javaType="com.you.yiban.entity.User">
+            <id column="username" property="username" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <result column="user_image" property="userImage" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </association>
+    </resultMap>
+    
     <insert id="insertMessage">
         insert ignore into message(username,message_type,
-        message,qq,phone,message_answer,message_state,
-        create_time,answer_image,answer_username)
-        values (#{username},#{messageType},#{message},#{qq},#{phone},null,0,
-        #{createTime},null,null)
+        message,qq,phone,message_answer,message_state,create_time,
+        answer_image,answer_username,praise_count)
+        values (#{username},#{messageType},#{message},#{qq},#{phone},null,0,#{createTime},
+        null,null,0)
     </insert>
 
     <select id="queryListMessageByUsername" resultType="com.you.yiban.entity.Message">
@@ -19,9 +37,12 @@
         message.create_time,
         message.answer_username,
         message.answer_image,
-        message.message_answer
+        message.message_answer,
+        message.username,
+        message.praise_count,
+        user.user_image
         from message inner join user on message.username = user.username
-        where message.username = #{username}
+        where message.username = #{username} order by message.create_time desc
     </select>
 
     <select id="getAllMessage" resultType="com.you.yiban.entity.Message">
@@ -29,11 +50,16 @@
         message.message_id,
         message.message_type,
         message.create_time,
+        message.message_state,
         message.message,
         message.message_answer,
+        message.phone,
+        message.answer_username,
+        message.answer_image,
+        message.praise_count,
         user.username,
         user.user_image
-        from message inner join user on message.username = user.username
+        from message inner join user on message.username = user.username  order by message.create_time desc
     </select>
 
     <select id="getMessageWithAnswer" resultType="com.you.yiban.entity.Message">
@@ -41,10 +67,14 @@
         message.message_type,
         message.create_time,
         message.message,
+        message.message_state,
+        message.message_id,
+        message.answer_username,
+        message.answer_image,
         user.username,
         user.user_image
         from message message inner join user on message.username = user.username
-        where  message_state = 1
+        where  message_state = 1 order by message.create_time desc
     </select>
 
     <select id="getWaitDeal" resultType="com.you.yiban.entity.Message">
@@ -52,10 +82,13 @@
         message.message_type,
         message.create_time,
         message.message,
+        message.message_state,
+        message.message_id,
+        message.phone,
         user.username,
         user.user_image
         from message message inner join user on message.username = user.username
-        where  message_state = 0
+        where  message_state = 0 order by message.create_time desc
     </select>
 
     <update id="dealMessage">
@@ -74,5 +107,25 @@
     <select id="getByMessageId" parameterType="int" resultType="com.you.yiban.entity.Message" >
         select * from message where message_id = #{messageId}
     </select>
+    <select id="getMesgByType" parameterType="String" resultType="com.you.yiban.entity.Message">
+        select 
+        message.message_type,
+        message.message,
+        message.message_state,
+        message.create_time,
+        message.answer_username,
+        message.answer_image,
+        message.message_answer,
+        message.answer_image,
+        message.message_id,
+        message.username,
+        message.praise_count,
+        user.user_image 
+        from message inner join user on message.username = user.username
+        where message.message_type = #{messageType} order by message.create_time desc
+    </select>
+    <update id="updatePraiseCount">
+        update message set praise_count = (praise_count +1) where message_id = #{messageId}
+    </update>
 </mapper>
 

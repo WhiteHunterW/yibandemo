@@ -6,19 +6,21 @@ import com.you.yiban.service.MessageService;
 import com.you.yiban.util.ResultUtil;
 import com.you.yiban.vo.ResultVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sun.awt.SunHints;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
  * @author w.z
  * @date 2019/8/12 15:50
  */
-
+@CrossOrigin
 @Controller
 @RequestMapping("/message")
 public class MessageController {
@@ -78,6 +80,14 @@ public class MessageController {
         List<Message> list = messageService.getDealtMessage();
         return ResultUtil.success(list);
     }
+    
+    @RequestMapping(value = "/getmsgbytype",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultVo getMessageByType(String messageType){
+        // 根据报料部门返回报料信息
+        List<Message> list = messageService.getMessageByType(messageType);
+        return ResultUtil.success(list);
+    }
     @RequestMapping(value = "/getAllCount",method = RequestMethod.GET)
     @ResponseBody
     public ResultVo getAllCount(){
@@ -119,5 +129,17 @@ public class MessageController {
         // 删除报料
         messageService.deleteMessage(messageId);
         return ResultUtil.success();
+    }
+    
+    @RequestMapping(value = "/addpraisecount",method = RequestMethod.PUT)
+    @ResponseBody
+    public ResultVo addPraiseCount(String messageId){
+        int result = messageService.updatePraiseCount(messageId);
+        if (result > 0){
+            return ResultUtil.success();
+        }
+        else {
+            return ResultUtil.error("更新点赞失败");
+        }
     }
 }
