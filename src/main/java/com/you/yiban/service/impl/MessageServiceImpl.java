@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 // 添加注解service
 @Service
@@ -59,7 +62,10 @@ public class MessageServiceImpl implements MessageService {
         final boolean exist = message.getMessageType() != null && message.getMessage() != null
                 && message.getQq() != null && message.getPhone() !=null;
         if (exist){
-            message.setCreateTime(new Date());
+           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+           Date date = new Date();
+           String format = dateFormat.format(date);
+           message.setCreateTime(format);
             try {
                 Integer effectNum = messageDao.insertMessage(message);
                 if (effectNum > 0) {
@@ -117,8 +123,8 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     public Message modifyMessage(int id,
             String messageAnswer,String answerImage,String answerUsername){
-        final boolean exist = messageAnswer != null 
-                && answerImage != null && answerUsername !=null;
+        final boolean exist = (messageAnswer != null) 
+                && (answerImage != null) && (answerUsername !=null);
         if (exist) {
             try {
                 messageDao.dealMessage(id,messageAnswer,answerImage,answerUsername);
@@ -152,6 +158,16 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-   
+    @Override
+    public List<Message> getMessageByType(String messageType) {
+        // 根据报料部门查出报料信息
+        return  messageDao.getMesgByType(messageType);
+    }
 
+    @Override
+    public int updatePraiseCount(String messageId) {
+        // 增加点赞数量
+        int result = messageDao.updatePraiseCount(messageId);
+        return result;
+    }
 }

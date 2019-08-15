@@ -14,7 +14,8 @@ public class User {
     private Integer userType;
     // 用户学历
     private String userEducation;
-
+    // 用户部门
+    private String userPartment;
 
     public String getUsername() {
         return username;
@@ -56,6 +57,14 @@ public class User {
         this.userEducation = userEducation;
     }
 
+    public String getUserPartment() {
+        return userPartment;
+    }
+
+    public void setUserPartment(String userPartment) {
+        this.userPartment = userPartment;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -64,6 +73,7 @@ public class User {
                 ", userImage='" + userImage + '\'' +
                 ", userType=" + userType +
                 ", userEducation='" + userEducation + '\'' +
+                ", userPartment='" + userPartment + '\'' +
                 '}';
     }
 }

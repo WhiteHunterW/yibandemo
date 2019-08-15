@@ -34,7 +34,7 @@ public class MessageServiceImplTest {
     @Test
     public void getListByUsername() {
         
-        List<Message> list = messageService.getListByUsername("test1");
+        List<Message> list = messageService.getListByUsername("admin");
         logger.info("messagelist={}",list);
     }
 
@@ -46,7 +46,7 @@ public class MessageServiceImplTest {
         message.setMessageType("tttt");
         message.setQq("18699344@qq.com");
         message.setPhone("181998333");
-        message.setUsername("test1");
+        message.setUsername("user");
         boolean count = messageService.addMessage(message);
         logger.info("count={}",count);
     }
@@ -78,7 +78,7 @@ public class MessageServiceImplTest {
 
     @Test
     public void modifyMessage() {
-        Message message = messageService.modifyMessage(6,"answer","image/teat2.jpg","user1");
+        Message message = messageService.modifyMessage(8,"answer","image/teat2.jpg","user1");
         logger.info("message={}",message);
     }
 
@@ -99,6 +99,11 @@ public class MessageServiceImplTest {
     @Test
     public void getDealtgMessage(){
         List<Message> list = messageService.getDealtMessage();
+        logger.info("list={}",list);
+    }
+    @Test
+    public void getByType(){
+        List<Message> list = messageService.getMessageByType("后勤");
         logger.info("list={}",list);
     }
 }

@@ -38,7 +38,7 @@ public class ResultUtil {
     public static ResultVo error(String msg){
         ResultVo resultVo = new ResultVo();
         resultVo.setCode(0);
-       resultVo.setData(msg);
+       resultVo.setMsg(msg);
         return resultVo;
     }
     

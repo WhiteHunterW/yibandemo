@@ -83,4 +83,16 @@ public interface MessageService {
      * @return
      */
     public Message getMessgeById(int messageId);
+
+    /**
+     * 根据报料部门返回报料信息
+     */
+    public List<Message> getMessageByType(String messageType);
+
+    /**
+     * 增加点赞数量
+     * @param messageId
+     * @return
+     */
+    public int updatePraiseCount(String messageId);
 }
