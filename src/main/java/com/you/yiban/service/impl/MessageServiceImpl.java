@@ -3,49 +3,58 @@ package com.you.yiban.service.impl;
 import com.you.yiban.dao.MessageDao;
 import com.you.yiban.entity.Message;
 import com.you.yiban.service.MessageService;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-// 添加注解service
 @Service
 public class MessageServiceImpl implements MessageService {
 
     @Autowired
     private MessageDao messageDao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+
+    /**
+     * 根据用户名查询用户自己的报料
+     * @param username
+     * @return
+     */
     @Override
     public List<Message> getListByUsername(String username){
-        // 根据用户名查询用户自己的报料
         return messageDao.queryListMessageByUsername(username);
     }
 
+    /**
+     * 查询等待处理的报料
+     * @return
+     */
     @Override
     public List<Message> getWaitingMessage() {
-        // 查询等待处理的报料
         return messageDao.getWaitDeal();
     }
-    
+
+    /**
+     * 查询已经被处理的报料
+     * @return
+     */
     @Override
     @Transactional
     public List<Message> getDealtMessage() {
-        // 查询已经被处理的报料
         return messageDao.getMessageWithAnswer();
     }
-    
+
+    /**
+     * 根据报料id查出具体的报料
+     * @param messageId
+     * @return
+     */
+    @Override
     public Message getMessgeById(int messageId){
-        // 根据报料id查出具体的报料
         return messageDao.getByMessageId(messageId);
     }
 
@@ -54,11 +63,15 @@ public class MessageServiceImpl implements MessageService {
         // 查询所有的报料
         return messageDao.getAllMessage();
     }
-    
+
+    /**
+     * 增加报料
+     * @param message
+     * @return
+     */
     @Override
     @Transactional
     public boolean addMessage(Message message){
-        // 增加报料
         final boolean exist = message.getMessageType() != null && message.getMessage() != null
                 && message.getQq() != null && message.getPhone() !=null;
         if (exist){
@@ -85,31 +98,39 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-    
+    /**
+     * 报料总数
+     * @return
+     */
     @Override
     @Transactional
     public Integer getMessageNumber(){
-        // 报料总数
         Integer number;
         List<Message> list = messageDao.getAllMessage();
         number = list.size();
         return number;
     }
 
+    /**
+     * 等待处理的报料数量
+     * @return
+     */
     @Override
     @Transactional
     public Integer getWaitDealNumber(){
-        // 等待处理的报料数量
         Integer waitNumber;
         List<Message> list = messageDao.getWaitDeal();
         waitNumber = list.size();
         return waitNumber;
     }
 
+    /**
+     * 已经被处理的报料数量
+     * @return
+     */
     @Override
     @Transactional
     public Integer isDealNumber(){
-        // 已经被处理的报料数量
         Integer all,waitNumber,isDealNumber;
         List<Message> list1 = messageDao.getAllMessage();
         List<Message> list2 = messageDao.getWaitDeal();
@@ -118,7 +139,15 @@ public class MessageServiceImpl implements MessageService {
         isDealNumber = all - waitNumber;
         return isDealNumber;
     }
-    
+
+    /**
+     * 修改报料信息
+     * @param id
+     * @param messageAnswer
+     * @param answerImage
+     * @param answerUsername
+     * @return
+     */
     @Override
     @Transactional
     public Message modifyMessage(int id,
@@ -139,9 +168,13 @@ public class MessageServiceImpl implements MessageService {
             return null;
         }
     }
-    
+
+    /**
+     * 删除报料
+     * @param messageId
+     * @return
+     */
     @Override
-    @Transactional
     public boolean deleteMessage(Integer messageId){
         Boolean flag;
         if(messageId != null){
@@ -158,15 +191,23 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    /**
+     * 根据报料部门查出报料信息
+     * @param messageType
+     * @return
+     */
     @Override
     public List<Message> getMessageByType(String messageType) {
-        // 根据报料部门查出报料信息
         return  messageDao.getMesgByType(messageType);
     }
 
+    /**
+     * 增加点赞数量
+     * @param messageId
+     * @return
+     */
     @Override
     public int updatePraiseCount(String messageId) {
-        // 增加点赞数量
         int result = messageDao.updatePraiseCount(messageId);
         return result;
     }

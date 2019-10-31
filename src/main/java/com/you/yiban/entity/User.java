@@ -1,20 +1,36 @@
 package com.you.yiban.entity;
 
-import java.util.Arrays;
 
 public class User {
 
-    // 用户名
+    /**
+     * 用户名
+     */
     private String username;
-    // 用户密码
+
+    /**
+     * 用户密码
+     */
     private String password;
-    // 用户头像
+
+    /**
+     * 用户头像
+     */
     private String userImage;
-    // 用户类型
+
+    /**
+     * 用户类型
+     */
     private Integer userType;
-    // 用户学历
+
+    /**
+     * 用户学历
+     */
     private String userEducation;
-    // 用户部门
+
+    /**
+     * 用户部门
+     */
     private String userPartment;
 
     public String getUsername() {

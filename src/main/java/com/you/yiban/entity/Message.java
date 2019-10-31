@@ -1,34 +1,69 @@
 package com.you.yiban.entity;
 
-import java.util.Arrays;
-import java.util.Date;
 
 public class Message {
-    // 发布用户的用户名   // TODO 修改用户名类型
+    /**
+     * 发布用户的用户名
+     */
     private String username;
-    // 报料id
+    /**
+     * 报料id
+     */
     private int messageId;
-    // 报料对应部门
+
+    /**
+     * 报料对应部门
+     */
     private String messageType;
-    // 报料内容
-    private  String message;
-    // 报料人qq
-    private  String qq;
-    // 报料人电话
-    private  String phone;
-    // 报料官方回复
+
+    /**
+     * 报料内容
+     */
+    private String message;
+
+    /**
+     * 报料人qq
+     */
+    private String qq;
+
+    /**
+     * 报料人电话
+     */
+    private String phone;
+
+    /**
+     * 报料官方回复
+     */
     private String messageAnswer;
-    // 报料回复状态
+
+    /**
+     * 报料回复状态
+     */
     private Integer messageState;
-    // 报料创建时间
+
+    /**
+     * 报料创建时间
+     */
     private String createTime;
-    // 回复人头像
+
+    /**
+     * 回复人头像
+     */
     private String answerImage;
-    // 回复人用户名
+
+    /**
+     * 回复人用户名
+     */
     private String answerUsername;
-    // 创建报料用户的头像
+
+    /**
+     * 创建报料用户的头像
+     */
     private String userImage;
-    // 点赞数量
+
+    /**
+     * 点赞数量
+     */
     private int praiseCount;
 
     public String getUserImage() {
