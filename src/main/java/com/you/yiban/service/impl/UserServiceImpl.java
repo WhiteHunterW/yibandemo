@@ -15,6 +15,12 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
     @Transactional
     public User checkLogin(String username,String password){
@@ -27,6 +33,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 根据用户名查询用户角色
+     * @param username
+     * @return
+     */
     @Override
     @Transactional
     public String getUserInformation(String username){

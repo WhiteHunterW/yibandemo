@@ -127,5 +127,8 @@
     <update id="updatePraiseCount">
         update message set praise_count = (praise_count +1) where message_id = #{messageId}
     </update>
+    <select id="countByCreateTime" resultType="com.you.yiban.entity.Message">
+         select DATE_FORMAT(create_time,'%Y')  as '年份',count(message_id) as '数量' from message group by DATE_FORMAT(create_time,'%Y');
+    </select>
 </mapper>
 
